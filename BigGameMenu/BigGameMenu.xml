@@ -1,0 +1,17 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+	<Frame name="BigGameMenu" parent="GameMenuFrame" toplevel="true" hidden="false" frameStrata="DIALOG" frameLevel="5" ignoreParentAlpha="true" ignoreParentScale="true" scale="0.71111111111111">
+		<Size x="2" y="2"/>
+		<Anchors>
+			<Anchor point="CENTER" relativeTo="UIParent" x="0" y="0"/>
+		</Anchors>
+	</Frame>
+
+	<Button name="BigGameMenuButtonTemplate" virtual="true" parent="BigGameMenu" toplevel="true" hidden="false" frameStrata="DIALOG" frameLevel="6" ignoreParentScale="true" scale="0.71111111111111" inherits="BigRedThreeSliceButtonTemplate">
+		<Size x="260" y="48"/>
+		<NormalFont style="Game15Font_o1"/>
+		<HighlightFont style="Game15Font_o1"/>
+		<DisabledFont style="Game15Font_o1"/>
+	</Button>
+
+</Ui>

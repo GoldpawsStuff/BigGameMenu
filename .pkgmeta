@@ -1,0 +1,18 @@
+package-as: BigGameMenu
+enable-nolib-creation: no
+
+move-folders:
+    BigGameMenu/BigGameMenu: BigGameMenu
+
+manual-changelog:
+    filename: CHANGELOG.md
+    markup-type: markdown
+
+license-output: LICENSE.txt
+
+ignore:
+    - CHANGELOG.md
+    - CODE_OF_CONDUCT.md
+    - LICENSE.md
+    - README.md
+    
