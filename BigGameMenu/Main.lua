@@ -37,7 +37,6 @@ local table_insert = table.insert
 -- WoW API
 local CreateFrame = CreateFrame
 
-
 -- Addon API
 -----------------------------------------------------------
 Private.GetButtonData = function(self)
@@ -187,9 +186,14 @@ Private.OnInit = function(self)
 	self.buttons = {}
 	self.buttonsByName = {}
 
+	self.hider = CreateFrame("Frame")
+	self.hider:SetAllPoints()
+	self.hider:Hide()
+
 	-- Kill off the Blizzard content
 	local frame = GameMenuFrame
-	frame:SetSize(0, 0)
+	frame:SetSize(0,0)
+	frame:SetFrameStrata("LOW")
 	frame:EnableMouse(false)
 	frame:EnableKeyboard(false)
 	frame:SetAlpha(0)

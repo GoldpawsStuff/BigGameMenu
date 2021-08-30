@@ -7,11 +7,59 @@
 		</Anchors>
 	</Frame>
 
+	<!--
 	<Button name="BigGameMenuButtonTemplate" virtual="true" parent="BigGameMenu" toplevel="true" hidden="false" frameStrata="DIALOG" frameLevel="6" ignoreParentScale="true" scale="0.71111111111111" inherits="BigRedThreeSliceButtonTemplate">
 		<Size x="260" y="48"/>
 		<NormalFont style="Game15Font_o1"/>
 		<HighlightFont style="Game15Font_o1"/>
 		<DisabledFont style="Game15Font_o1"/>
+	</Button>
+	-->
+
+	<Button name="BigGameMenuButtonTemplate" mixin="BigGameMenuButton" motionScriptsWhileDisabled="true" virtual="true" parent="BigGameMenu" toplevel="true" hidden="false" frameStrata="DIALOG" frameLevel="6" ignoreParentScale="true" scale="0.71111111111111">
+
+		<Size x="260" y="48"/>
+		<PushedTextOffset x="-2" y="-1"/>
+
+		<NormalFont style="Game15Font_o1"/>
+		<HighlightFont style="Game15Font_o1"/>
+		<DisabledFont style="Game15Font_o1"/>
+
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture parentKey="Left" file="Interface\AddOns\BigGameMenu\Media\128RedButton.tga">
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+						<Anchor point="BOTTOMLEFT"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="Right" file="Interface\AddOns\BigGameMenu\Media\128RedButton.tga">
+					<Anchors>
+						<Anchor point="TOPRIGHT"/>
+						<Anchor point="BOTTOMRIGHT"/>
+					</Anchors>
+				</Texture>
+				<Texture parentKey="Center"  file="Interface\AddOns\BigGameMenu\Media\128RedButton.tga">
+					<Anchors>
+						<Anchor point="TOPLEFT" relativeKey="$parent.Left" relativePoint="TOPRIGHT"/>
+						<Anchor point="BOTTOMRIGHT" relativeKey="$parent.Right" relativePoint="BOTTOMLEFT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+
+		<Scripts>
+			<OnLoad method="OnLoad"/>
+			<OnMouseDown method="OnMouseDown"/>
+			<OnMouseUp method="OnMouseUp"/>
+			<OnShow method="UpdateButton"/>
+			<OnDisable method="UpdateButton"/>
+			<OnEnable method="UpdateButton"/>
+			<OnEnter method="OnEnter"/>
+			<OnLeave method="OnLeave"/>
+			<OnSizeChanged method="UpdateScale"/>
+		</Scripts>
+
 	</Button>
 
 </Ui>
