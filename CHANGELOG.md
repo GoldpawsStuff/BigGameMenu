@@ -8,5 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Added basic support for Classic and BCC.
 
+### Changed
+- Changed the buttons to use a texture system that works for all WoW client versions.
+
 ## [1.0.0-Release] 2021-08-27
 - First commit.
