@@ -78,23 +78,43 @@ Private.GetButtonData = function(self)
 			}
 
 		elseif (self.IsRetail) then
-			self.buttonData = {
-				{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
-				{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
-				{ Ref = "GameMenuButtonWhatsNew", Text = GAMEMENU_NEW_BUTTON },
-				{ },
-				{ Ref = "GameMenuButtonOptions", Text = SYSTEMOPTIONS_MENU },
-				{ Ref = "GameMenuButtonUIOptions", Text = UIOPTIONS_MENU },
-				{ Ref = "GameMenuButtonKeybindings", Text = KEY_BINDINGS },
-				{ Ref = "GameMenuButtonMacros", Text = MACROS },
-				{ Ref = "GameMenuButtonAddons", Text = ADDONS },
-				{ },
-				{ Ref = "GameMenuButtonRatings", Text = RATINGS_MENU },
-				{ Ref = "GameMenuButtonLogout", Text = LOG_OUT },
-				{ Ref = "GameMenuButtonQuit", Text = EXIT_GAME },
-				{ },
-				{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
-			}
+			if (self.IsDragonflight) then
+				self.buttonData = {
+					{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
+					{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
+					{ Ref = "GameMenuButtonWhatsNew", Text = GAMEMENU_NEW_BUTTON },
+					{ },
+					{ Ref = "GameMenuButtonSettings", Text = GAMEMENU_SETTINGS },
+					{ Ref = "GameMenuButtonEditMode", Text = HUD_EDIT_MODE_MENU },
+					{ Ref = "GameMenuButtonMacros", Text = MACROS },
+					{ Ref = "GameMenuButtonAddons", Text = ADDONS },
+					{ },
+					{ Ref = "GameMenuButtonRatings", Text = RATINGS_MENU },
+					{ Ref = "GameMenuButtonLogout", Text = LOG_OUT },
+					{ Ref = "GameMenuButtonQuit", Text = EXIT_GAME },
+					{ },
+					{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME },
+				}
+
+			else
+				self.buttonData = {
+					{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
+					{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
+					{ Ref = "GameMenuButtonWhatsNew", Text = GAMEMENU_NEW_BUTTON },
+					{ },
+					{ Ref = "GameMenuButtonOptions", Text = SYSTEMOPTIONS_MENU },
+					{ Ref = "GameMenuButtonUIOptions", Text = UIOPTIONS_MENU },
+					{ Ref = "GameMenuButtonKeybindings", Text = KEY_BINDINGS },
+					{ Ref = "GameMenuButtonMacros", Text = MACROS },
+					{ Ref = "GameMenuButtonAddons", Text = ADDONS },
+					{ },
+					{ Ref = "GameMenuButtonRatings", Text = RATINGS_MENU },
+					{ Ref = "GameMenuButtonLogout", Text = LOG_OUT },
+					{ Ref = "GameMenuButtonQuit", Text = EXIT_GAME },
+					{ },
+					{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
+				}
+			end
 
 		end
 	end
@@ -102,8 +122,8 @@ Private.GetButtonData = function(self)
 end
 
 Private.UpdateButtons = function(self)
-	if (not self.buttons) then 
-		return 
+	if (not self.buttons) then
+		return
 	end
 
 	-- These are secure buttons, don't edit in combat.
@@ -203,7 +223,7 @@ Private.OnInit = function(self)
 	for i,info in self:GetButtonData() do
 		local button
 		if (info.Ref) then
-			button = CreateFrame("Button", nil, BigGameMenu, "BigGameMenuButtonTemplate,SecureActionButtonTemplate") 
+			button = CreateFrame("Button", nil, BigGameMenu, "BigGameMenuButtonTemplate,SecureActionButtonTemplate")
 			button:SetHighlightTexture(nil)
 			button:SetAttribute("type", "macro")
 			button:SetAttribute("macrotext", "/click GameMenuButtonContinue\n/click "..info.Ref)
@@ -242,13 +262,15 @@ end
 
 	-- Let's create some constants for faster lookups
 	local MAJOR,MINOR,PATCH = string.split(".", currentClientPatch)
+	MAJOR = tonumber(MAJOR)
 
 	-- These are defined in FrameXML/BNet.lua
 	-- *Using blizzard constants if they exist,
 	-- using string parsing as a fallback.
-	Private.IsRetail = (WOW_PROJECT_ID) and (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) or (tonumber(MAJOR) >= 9)
-	Private.IsClassic = tonumber(MAJOR) == 1
-	Private.IsBCC = tonumber(MAJOR) == 2
+	Private.IsRetail = (WOW_PROJECT_ID) and (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) or (MAJOR >= 9)
+	Private.IsDragonflight = MAJOR >= 10
+	Private.IsClassic = MAJOR == 1
+	Private.IsBCC = MAJOR == 2
 	Private.CurrentClientBuild = currentClientBuild -- Expose the build number too
 
 	-- Set a relative subpath to look for media files in.
@@ -258,19 +280,19 @@ end
 	end
 
 	-- Simple API calls to retrieve a media file.
-	-- Will honor the relativ subpath set above, if defined, 
+	-- Will honor the relativ subpath set above, if defined,
 	-- and will default to the addon folder itself if not.
-	-- Note that we cannot check for file or folder existence 
+	-- Note that we cannot check for file or folder existence
 	-- from within the WoW API, so you must make sure this is correct.
-	Private.GetMedia = function(self, name, type) 
+	Private.GetMedia = function(self, name, type)
 		if (Path) then
-			return ([[Interface\AddOns\%s\%s\%s.%s]]):format(Addon, Path, name, type or "tga") 
+			return ([[Interface\AddOns\%s\%s\%s.%s]]):format(Addon, Path, name, type or "tga")
 		else
-			return ([[Interface\AddOns\%s\%s.%s]]):format(Addon, name, type or "tga") 
+			return ([[Interface\AddOns\%s\%s.%s]]):format(Addon, name, type or "tga")
 		end
 	end
 
-	-- Parse chat input arguments 
+	-- Parse chat input arguments
 	local parse = function(msg)
 		msg = string.gsub(msg, "^%s+", "") -- Remove spaces at the start.
 		msg = string.gsub(msg, "%s+$", "") -- Remove spaces at the end.
@@ -280,7 +302,7 @@ end
 		else
 			return msg
 		end
-	end 
+	end
 
 	-- This methods lets you register a chat command, and a callback function or private method name.
 	-- Your callback will be called as callback(Private, editBox, commandName, ...) where (...) are all the input parameters.
@@ -294,12 +316,12 @@ end
 			if (func) then
 				func(Private, editBox, command, parse(string.lower(msg)))
 			end
-		end 
+		end
 	end
 
 	Private.GetAddOnInfo = function(self, index)
 		local name, title, notes, loadable, reason, security, newVersion = GetAddOnInfo(index)
-		local enabled = not(GetAddOnEnableState(UnitName("player"), index) == 0) 
+		local enabled = not(GetAddOnEnableState(UnitName("player"), index) == 0)
 		return name, title, notes, enabled, loadable, reason, security
 	end
 
@@ -316,9 +338,9 @@ end
 		end
 	end
 
-	-- This method lets you check if an addon WILL be loaded regardless of whether or not it currently is. 
-	-- This is useful if you want to check if an addon interacting with yours is enabled. 
-	-- My philosophy is that it's best to avoid addon dependencies in the toc file, 
+	-- This method lets you check if an addon WILL be loaded regardless of whether or not it currently is.
+	-- This is useful if you want to check if an addon interacting with yours is enabled.
+	-- My philosophy is that it's best to avoid addon dependencies in the toc file,
 	-- unless your addon is a plugin to another addon, that is.
 	Private.IsAddOnEnabled = function(self, target)
 		local target = string.lower(target)
@@ -345,61 +367,61 @@ end
 
 	-- Event Dispatcher and Initialization Handler
 	-----------------------------------------------------------
-	-- Assign our event script handler, 
+	-- Assign our event script handler,
 	-- which runs our initialization methods,
 	-- and dispatches event to the addon namespace.
 	self:RegisterEvent("ADDON_LOADED")
-	self:SetScript("OnEvent", function(self, event, ...) 
+	self:SetScript("OnEvent", function(self, event, ...)
 		if (event == "ADDON_LOADED") then
 			-- Nothing happens before this has fired for your addon.
-			-- When it fires, we remove the event listener 
+			-- When it fires, we remove the event listener
 			-- and call our initialization method.
 			if ((...) == Addon) then
 				-- Delete our initial registration of this event.
-				-- Note that you are free to re-register it in any of the 
-				-- addon namespace methods. 
+				-- Note that you are free to re-register it in any of the
+				-- addon namespace methods.
 				self:UnregisterEvent("ADDON_LOADED")
 				-- Call the initialization method.
 				if (Private.OnInit) then
 					Private:OnInit()
 				end
-				-- If this was a load-on-demand addon, 
+				-- If this was a load-on-demand addon,
 				-- then we might be logged in already.
-				-- If that is the case, directly run 
+				-- If that is the case, directly run
 				-- the enabling method.
 				if (IsLoggedIn()) then
 					if (Private.OnEnable) then
 						Private:OnEnable()
 					end
 				else
-					-- If this is a regular always-load addon, 
+					-- If this is a regular always-load addon,
 					-- we're not yet logged in, and must listen for this.
 					self:RegisterEvent("PLAYER_LOGIN")
 				end
-				-- Return. We do not wish to forward the loading event 
+				-- Return. We do not wish to forward the loading event
 				-- for our own addon to the namespace event handler.
 				-- That is what the initialization method exists for.
 				return
 			end
 		elseif (event == "PLAYER_LOGIN") then
-			-- This event only ever fires once on a reload, 
-			-- and anything you wish done at this event, 
+			-- This event only ever fires once on a reload,
+			-- and anything you wish done at this event,
 			-- should be put in the namespace enable method.
 			self:UnregisterEvent("PLAYER_LOGIN")
 			-- Call the enabling method.
 			if (Private.OnEnable) then
 				Private:OnEnable()
 			end
-			-- Return. We do not wish to forward this 
+			-- Return. We do not wish to forward this
 			-- to the namespace event handler.
-			return 
+			return
 		end
 		-- Forward other events than our two initialization events
-		-- to the addon namespace's event handler. 
+		-- to the addon namespace's event handler.
 		-- Note that you can always register more ADDON_LOADED
-		-- if you wish to listen for other addons loading.  
+		-- if you wish to listen for other addons loading.
 		if (Private.OnEvent) then
-			Private:OnEvent(event, ...) 
+			Private:OnEvent(event, ...)
 		end
 	end)
 end)((function() return CreateFrame("Frame", nil, WorldFrame) end)())
