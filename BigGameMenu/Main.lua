@@ -77,6 +77,24 @@ Private.GetButtonData = function(self)
 				{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
 			}
 
+		elseif (self.IsWotLK) then
+			self.buttonData = {
+				{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
+				{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
+				{ },
+				{ Ref = "GameMenuButtonOptions", Text = SYSTEMOPTIONS_MENU },
+				{ Ref = "GameMenuButtonUIOptions", Text = UIOPTIONS_MENU },
+				{ Ref = "GameMenuButtonKeybindings", Text = KEY_BINDINGS },
+				{ Ref = "GameMenuButtonMacros", Text = MACROS },
+				{ Ref = "GameMenuButtonAddons", Text = ADDONS },
+				{ },
+				{ Ref = "GameMenuButtonRatings", Text = RATINGS_MENU },
+				{ Ref = "GameMenuButtonLogout", Text = LOGOUT },
+				{ Ref = "GameMenuButtonQuit", Text = EXIT_GAME },
+				{ },
+				{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
+			}
+
 		elseif (self.IsRetail) then
 			if (self.IsDragonflight) then
 				self.buttonData = {
@@ -271,6 +289,7 @@ end
 	Private.IsDragonflight = MAJOR >= 10
 	Private.IsClassic = MAJOR == 1
 	Private.IsBCC = MAJOR == 2
+	Private.IsWotLK = MAJOR == 3
 	Private.CurrentClientBuild = currentClientBuild -- Expose the build number too
 
 	-- Set a relative subpath to look for media files in.
