@@ -1,3 +1,6 @@
+-- Retrive addon folder name, and our local, private namespace.
+local Addon, Private = ...
+
 -- Based on blizzard's code.
 
 local atlasName = "128-Redbutton"
@@ -38,10 +41,10 @@ BigGameMenuButton = {}
 
 BigGameMenuButton.OnLoad = function(self)
 	self.leftAtlasInfo = {}
-	self.leftAtlasInfo.width, 
+	self.leftAtlasInfo.width,
 	self.leftAtlasInfo.height = GetAtlasSize(atlasName.."-Left")
 	self.rightAtlasInfo = {}
-	self.rightAtlasInfo.width, 
+	self.rightAtlasInfo.width,
 	self.rightAtlasInfo.height = GetAtlasSize(atlasName.."-Right")
 end
 
@@ -124,7 +127,7 @@ BigGameMenuButton.UpdateButton = function(self, buttonState)
 	local post = ""
 	if (buttonState == "DISABLED") then
 		post = "-Disabled"
-	elseif (buttonState == "PUSHED") then
+	elseif (buttonState == "PUSHED") and (not Private.IsDragonflight or not GetCVarBool("ActionButtonUseKeyDown")) then
 		post = "-Pressed"
 	end
 

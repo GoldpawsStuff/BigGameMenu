@@ -29,6 +29,7 @@ local Addon, Private = ...
 -- Lua API
 local pairs = pairs
 local select = select
+local string_format = string.format
 local string_lower = string.lower
 local string_gsub = string.gsub
 local string_upper = string.upper
@@ -95,44 +96,42 @@ Private.GetButtonData = function(self)
 				{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
 			}
 
-		elseif (self.IsRetail) then
-			if (self.IsDragonflight) then
-				self.buttonData = {
-					{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
-					{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
-					{ Ref = "GameMenuButtonWhatsNew", Text = GAMEMENU_NEW_BUTTON },
-					{ },
-					{ Ref = "GameMenuButtonSettings", Text = GAMEMENU_SETTINGS },
-					{ Ref = "GameMenuButtonEditMode", Text = HUD_EDIT_MODE_MENU },
-					{ Ref = "GameMenuButtonMacros", Text = MACROS },
-					{ Ref = "GameMenuButtonAddons", Text = ADDONS },
-					{ },
-					{ Ref = "GameMenuButtonRatings", Text = RATINGS_MENU },
-					{ Ref = "GameMenuButtonLogout", Text = LOG_OUT },
-					{ Ref = "GameMenuButtonQuit", Text = EXIT_GAME },
-					{ },
-					{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME },
-				}
+		elseif (self.IsDragonflight) then
+			self.buttonData = {
+				{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
+				{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
+				{ Ref = "GameMenuButtonWhatsNew", Text = GAMEMENU_NEW_BUTTON },
+				{ },
+				{ Ref = "GameMenuButtonSettings", Text = GAMEMENU_OPTIONS },
+				{ Ref = "GameMenuButtonEditMode", Text = HUD_EDIT_MODE_MENU },
+				{ Ref = "GameMenuButtonMacros", Text = MACROS },
+				{ Ref = "GameMenuButtonAddons", Text = ADDONS },
+				{ },
+				{ Ref = "GameMenuButtonRatings", Text = RATINGS_MENU },
+				{ Ref = "GameMenuButtonLogout", Text = LOG_OUT },
+				{ Ref = "GameMenuButtonQuit", Text = EXIT_GAME },
+				{ },
+				{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME },
+			}
 
-			else
-				self.buttonData = {
-					{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
-					{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
-					{ Ref = "GameMenuButtonWhatsNew", Text = GAMEMENU_NEW_BUTTON },
-					{ },
-					{ Ref = "GameMenuButtonOptions", Text = SYSTEMOPTIONS_MENU },
-					{ Ref = "GameMenuButtonUIOptions", Text = UIOPTIONS_MENU },
-					{ Ref = "GameMenuButtonKeybindings", Text = KEY_BINDINGS },
-					{ Ref = "GameMenuButtonMacros", Text = MACROS },
-					{ Ref = "GameMenuButtonAddons", Text = ADDONS },
-					{ },
-					{ Ref = "GameMenuButtonRatings", Text = RATINGS_MENU },
-					{ Ref = "GameMenuButtonLogout", Text = LOG_OUT },
-					{ Ref = "GameMenuButtonQuit", Text = EXIT_GAME },
-					{ },
-					{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
-				}
-			end
+		elseif (self.IsRetail) then
+			self.buttonData = {
+				{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
+				{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
+				{ Ref = "GameMenuButtonWhatsNew", Text = GAMEMENU_NEW_BUTTON },
+				{ },
+				{ Ref = "GameMenuButtonOptions", Text = SYSTEMOPTIONS_MENU },
+				{ Ref = "GameMenuButtonUIOptions", Text = UIOPTIONS_MENU },
+				{ Ref = "GameMenuButtonKeybindings", Text = KEY_BINDINGS },
+				{ Ref = "GameMenuButtonMacros", Text = MACROS },
+				{ Ref = "GameMenuButtonAddons", Text = ADDONS },
+				{ },
+				{ Ref = "GameMenuButtonRatings", Text = RATINGS_MENU },
+				{ Ref = "GameMenuButtonLogout", Text = LOG_OUT },
+				{ Ref = "GameMenuButtonQuit", Text = EXIT_GAME },
+				{ },
+				{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
+			}
 
 		end
 	end
@@ -242,9 +241,20 @@ Private.OnInit = function(self)
 		local button
 		if (info.Ref) then
 			button = CreateFrame("Button", nil, BigGameMenu, "BigGameMenuButtonTemplate,SecureActionButtonTemplate")
-			button:SetHighlightTexture(nil)
-			button:SetAttribute("type", "macro")
-			button:SetAttribute("macrotext", "/click GameMenuButtonContinue\n/click "..info.Ref)
+			if (self.IsDragonflight) then
+				button:SetHighlightTexture("")
+				button:SetAttribute("type", "macro")
+				button:RegisterForClicks("AnyUp","AnyDown")
+				button:SetAttribute("macrotext", "/click "..info.Ref.." LeftButton")
+			else
+				button:SetHighlightTexture(nil)
+				button:SetAttribute("type", "macro")
+				if (info.Ref == "GameMenuButtonContinue") then
+					button:SetAttribute("macrotext", "/click "..info.Ref)
+				else
+					button:SetAttribute("macrotext", "/click GameMenuButtonContinue\n/click "..info.Ref)
+				end
+			end
 			button:SetText(info.Text)
 			self.buttonsByName[info.Ref] = button
 		end
