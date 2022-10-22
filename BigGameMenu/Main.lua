@@ -199,6 +199,13 @@ Private.UpdateButtons = function(self)
 
 	if (first) then
 		first:SetPoint("CENTER", 0, height/2)
+
+		local backdrop = BigGameMenu.Backdrop
+		backdrop:ClearAllPoints()
+		backdrop:SetPoint("LEFT", first, "LEFT", -18, 0)
+		backdrop:SetPoint("RIGHT", first, "RIGHT", 18, 0)
+		backdrop:SetPoint("TOP", first, "TOP", 0, 30)
+		backdrop:SetPoint("BOTTOM", previous, "BOTTOM", 0, -30)
 	end
 
 end

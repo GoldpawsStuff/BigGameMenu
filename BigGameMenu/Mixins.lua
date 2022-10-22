@@ -46,9 +46,15 @@ BigGameMenuButton.OnLoad = function(self)
 	self.rightAtlasInfo = {}
 	self.rightAtlasInfo.width,
 	self.rightAtlasInfo.height = GetAtlasSize(atlasName.."-Right")
+	self.Left:SetVertexColor(.85, .85, .85)
+	self.Right:SetVertexColor(.85, .85, .85)
+	self.Center:SetVertexColor(.85, .85, .85)
 end
 
 BigGameMenuButton.OnEnter = function(self)
+	self.Left:SetVertexColor(1, 1, 1)
+	self.Right:SetVertexColor(1, 1, 1)
+	self.Center:SetVertexColor(1, 1, 1)
 	if (GameTooltip:IsProtected()) then
 		return
 	end
@@ -59,6 +65,9 @@ BigGameMenuButton.OnEnter = function(self)
 end
 
 BigGameMenuButton.OnLeave = function(self)
+	self.Left:SetVertexColor(.85, .85, .85)
+	self.Right:SetVertexColor(.85, .85, .85)
+	self.Center:SetVertexColor(.85, .85, .85)
 	if (GameTooltip:IsProtected()) then
 		return
 	end

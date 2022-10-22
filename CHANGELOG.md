@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file. Be aware th
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.16-Release] 2022-10-22
+### Added
+- The menu frame now have a fitting backdrop.
+- The buttons now slighlty light up when mousing over them.
+
 ## [1.0.15-Release] 2022-09-24
 ### Changed
 - Updated to work with Dragonflight. Note that buttons now respond to the console variable controlling whether your actions are cast when pressing or releasing the button. Blizzard is enforcing this setting globally for secure action buttons using macros now, and this addon is affected.

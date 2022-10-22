@@ -5,6 +5,22 @@
 		<Anchors>
 			<Anchor point="CENTER" relativeTo="UIParent" x="0" y="0"/>
 		</Anchors>
+		<Frames>
+			<Frame name="$parentBackdrop" mixin="BigGameMenuBackdropTemplateMixin" parentKey="Backdrop" frameStrata="DIALOG" frameLevel="4">
+				<Scripts>
+					<OnLoad>
+						self:SetBackdrop({
+							bgFile = [[Interface\ChatFrame\ChatFrameBackground]],
+							edgeSize = 32, edgeFile = [[Interface\AddOns\BigGameMenu\Media\border-tooltip.tga]],
+							tile = true,
+							insets = { left = 8, right = 8, top = 16, bottom = 16 }
+						});
+						self:SetBackdropColor(.05, .05, .05, .85);
+						self:SetBackdropBorderColor(1, 1, 1, 1);
+					</OnLoad>
+				</Scripts>
+			</Frame>
+		</Frames>
 	</Frame>
 
 	<!--
