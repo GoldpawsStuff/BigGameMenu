@@ -96,14 +96,14 @@ Private.GetButtonData = function(self)
 				{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
 			}
 
-		elseif (self.IsDragonflight) then
+		elseif (self.IsRetail) then
 			self.buttonData = {
 				{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
 				{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
 				{ Ref = "GameMenuButtonWhatsNew", Text = GAMEMENU_NEW_BUTTON },
 				{ },
 				{ Ref = "GameMenuButtonSettings", Text = GAMEMENU_OPTIONS },
-				{ Ref = "GameMenuButtonEditMode", Text = HUD_EDIT_MODE_MENU },
+				--{ Ref = "GameMenuButtonEditMode", Text = HUD_EDIT_MODE_MENU },
 				{ Ref = "GameMenuButtonMacros", Text = MACROS },
 				{ Ref = "GameMenuButtonAddons", Text = ADDONS },
 				{ },
@@ -113,26 +113,6 @@ Private.GetButtonData = function(self)
 				{ },
 				{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME },
 			}
-
-		elseif (self.IsRetail) then
-			self.buttonData = {
-				{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
-				{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
-				{ Ref = "GameMenuButtonWhatsNew", Text = GAMEMENU_NEW_BUTTON },
-				{ },
-				{ Ref = "GameMenuButtonOptions", Text = SYSTEMOPTIONS_MENU },
-				{ Ref = "GameMenuButtonUIOptions", Text = UIOPTIONS_MENU },
-				{ Ref = "GameMenuButtonKeybindings", Text = KEY_BINDINGS },
-				{ Ref = "GameMenuButtonMacros", Text = MACROS },
-				{ Ref = "GameMenuButtonAddons", Text = ADDONS },
-				{ },
-				{ Ref = "GameMenuButtonRatings", Text = RATINGS_MENU },
-				{ Ref = "GameMenuButtonLogout", Text = LOG_OUT },
-				{ Ref = "GameMenuButtonQuit", Text = EXIT_GAME },
-				{ },
-				{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
-			}
-
 		end
 	end
 	return ipairs(self.buttonData)
