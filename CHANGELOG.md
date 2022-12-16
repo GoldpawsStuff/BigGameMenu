@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. Be aware th
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.20-Release] 2022-12-16
+### Fixed
+- The EditMode button has returned to retail!
+
 ## [1.0.19-Release] 2022-12-10
 ### Fixed
 - Macroing the EditMode button taints the EditMode, so we have to remove this button from our menu in retail.

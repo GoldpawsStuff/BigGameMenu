@@ -103,7 +103,7 @@ Private.GetButtonData = function(self)
 				{ Ref = "GameMenuButtonWhatsNew", Text = GAMEMENU_NEW_BUTTON },
 				{ },
 				{ Ref = "GameMenuButtonSettings", Text = GAMEMENU_OPTIONS },
-				--{ Ref = "GameMenuButtonEditMode", Text = HUD_EDIT_MODE_MENU },
+				{ Ref = "GameMenuButtonEditMode", Text = HUD_EDIT_MODE_MENU },
 				{ Ref = "GameMenuButtonMacros", Text = MACROS },
 				{ Ref = "GameMenuButtonAddons", Text = ADDONS },
 				{ },
@@ -226,15 +226,18 @@ Private.OnInit = function(self)
 	-- Spawn our own buttons
 	for i,info in self:GetButtonData() do
 		local button
-		if (info.Ref) then
+		local ref = info.Ref and _G[info.Ref]
+		if (ref) then
 			button = CreateFrame("Button", nil, BigGameMenu, "BigGameMenuButtonTemplate,SecureActionButtonTemplate")
-			if (self.IsDragonflight) then
+			if (self.IsRetail) then
 				button:SetHighlightTexture("")
 				button:SetAttribute("type", "macro")
 				button:RegisterForClicks("AnyUp","AnyDown")
-				button:SetAttribute("macrotext", "/click "..info.Ref.." LeftButton")
+				button:SetAttribute("macrotext", "/click "..ref:GetName())
+				button:SetAttribute("click", "macro")
+				button:SetAttribute("pressAndHoldAction", true)
 			else
-				button:SetHighlightTexture(nil)
+				button:SetHighlightTexture("")
 				button:SetAttribute("type", "macro")
 				if (info.Ref == "GameMenuButtonContinue") then
 					button:SetAttribute("macrotext", "/click "..info.Ref)
@@ -272,22 +275,22 @@ end
 	-- Private Default API
 	-- This mostly contains methods we always want available
 	-----------------------------------------------------------
-	local currentClientPatch, currentClientBuild = GetBuildInfo()
-	currentClientBuild = tonumber(currentClientBuild)
 
-	-- Let's create some constants for faster lookups
-	local MAJOR,MINOR,PATCH = string.split(".", currentClientPatch)
-	MAJOR = tonumber(MAJOR)
+	-- Addon version
+	-- *Keyword substitution requires the packager,
+	-- and does not affect direct GitHub repo pulls.
+	local version = "@project-version@"
+	if (version:find("project%-version")) then
+		version = "Development"
+	end
 
-	-- These are defined in FrameXML/BNet.lua
-	-- *Using blizzard constants if they exist,
-	-- using string parsing as a fallback.
-	Private.IsRetail = (WOW_PROJECT_ID) and (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE) or (MAJOR >= 9)
-	Private.IsDragonflight = MAJOR >= 10
-	Private.IsClassic = MAJOR == 1
-	Private.IsBCC = MAJOR == 2
-	Private.IsWotLK = MAJOR == 3
-	Private.CurrentClientBuild = currentClientBuild -- Expose the build number too
+	-- WoW Client versions
+	local patch, build, date, version = GetBuildInfo()
+	Private.IsRetail = (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE)
+	Private.IsClassic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
+	Private.IsTBC = (WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC)
+	Private.IsWrath = (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC)
+	Private.WoW10 = version >= 100000
 
 	-- Set a relative subpath to look for media files in.
 	local Path

@@ -136,7 +136,7 @@ BigGameMenuButton.UpdateButton = function(self, buttonState)
 	local post = ""
 	if (buttonState == "DISABLED") then
 		post = "-Disabled"
-	elseif (buttonState == "PUSHED") and (not Private.IsDragonflight or not GetCVarBool("ActionButtonUseKeyDown")) then
+	elseif (buttonState == "PUSHED") and (not Private.IsRetail or not GetCVarBool("ActionButtonUseKeyDown")) then
 		post = "-Pressed"
 	end
 
