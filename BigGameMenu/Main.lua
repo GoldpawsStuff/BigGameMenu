@@ -60,7 +60,7 @@ Private.GetButtonData = function(self)
 				{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
 			}
 
-		elseif (self.IsBCC) then
+		elseif (self.IsTBC) then
 			self.buttonData = {
 				{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
 				{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
@@ -78,7 +78,7 @@ Private.GetButtonData = function(self)
 				{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
 			}
 
-		elseif (self.IsWotLK) then
+		elseif (self.IsWrath) then
 			self.buttonData = {
 				{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
 				{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
