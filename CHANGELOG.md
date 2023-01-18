@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file. Be aware th
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.22-Release] 2023-01-18
+- Updated for WoW 3.4.1.
+
 ## [1.0.21-Release] 2022-12-17
 ### Fixed
 - Fixed the addon for Classic Era and Wrath after unintentionally breaking it for them yesterday.
