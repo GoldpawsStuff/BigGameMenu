@@ -79,22 +79,41 @@ Private.GetButtonData = function(self)
 			}
 
 		elseif (self.IsWrath) then
-			self.buttonData = {
-				{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
-				{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
-				{ },
-				{ Ref = "GameMenuButtonOptions", Text = SYSTEMOPTIONS_MENU },
-				{ Ref = "GameMenuButtonUIOptions", Text = UIOPTIONS_MENU },
-				{ Ref = "GameMenuButtonKeybindings", Text = KEY_BINDINGS },
-				{ Ref = "GameMenuButtonMacros", Text = MACROS },
-				{ Ref = "GameMenuButtonAddons", Text = ADDONS },
-				{ },
-				{ Ref = "GameMenuButtonRatings", Text = RATINGS_MENU },
-				{ Ref = "GameMenuButtonLogout", Text = LOGOUT },
-				{ Ref = "GameMenuButtonQuit", Text = EXIT_GAME },
-				{ },
-				{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
-			}
+			if (self.ClientMinor > 4) or (self.ClientMinor == 4 and self.ClientMicro >= 2) then
+				self.buttonData = {
+					{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
+					{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
+					{ },
+					{ Ref = "GameMenuButtonOptions", Text = SYSTEMOPTIONS_MENU },
+					--{ Ref = "GameMenuButtonUIOptions", Text = UIOPTIONS_MENU },
+					--{ Ref = "GameMenuButtonKeybindings", Text = KEY_BINDINGS },
+					{ Ref = "GameMenuButtonMacros", Text = MACROS },
+					{ Ref = "GameMenuButtonAddons", Text = ADDONS },
+					{ },
+					{ Ref = "GameMenuButtonRatings", Text = RATINGS_MENU },
+					{ Ref = "GameMenuButtonLogout", Text = LOGOUT },
+					{ Ref = "GameMenuButtonQuit", Text = EXIT_GAME },
+					{ },
+					{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
+				}
+			else
+				self.buttonData = {
+					{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
+					{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
+					{ },
+					{ Ref = "GameMenuButtonOptions", Text = SYSTEMOPTIONS_MENU },
+					{ Ref = "GameMenuButtonUIOptions", Text = UIOPTIONS_MENU },
+					{ Ref = "GameMenuButtonKeybindings", Text = KEY_BINDINGS },
+					{ Ref = "GameMenuButtonMacros", Text = MACROS },
+					{ Ref = "GameMenuButtonAddons", Text = ADDONS },
+					{ },
+					{ Ref = "GameMenuButtonRatings", Text = RATINGS_MENU },
+					{ Ref = "GameMenuButtonLogout", Text = LOGOUT },
+					{ Ref = "GameMenuButtonQuit", Text = EXIT_GAME },
+					{ },
+					{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
+				}
+			end
 
 		elseif (self.IsRetail) then
 			self.buttonData = {
@@ -286,11 +305,21 @@ end
 
 	-- WoW Client versions
 	local patch, build, date, version = GetBuildInfo()
+	local major, minor, micro = string.split(".", patch)
+
 	Private.IsRetail = (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE)
 	Private.IsClassic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
 	Private.IsTBC = (WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC)
 	Private.IsWrath = (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC)
 	Private.WoW10 = version >= 100000
+
+	Private.ClientVersion = version
+	Private.ClientDate = date
+	Private.ClientPatch = patch
+	Private.ClientMajor = tonumber(major)
+	Private.ClientMinor = tonumber(minor)
+	Private.ClientMicro = tonumber(micro)
+	Private.ClientBuild = tonumber(build)
 
 	-- Set a relative subpath to look for media files in.
 	local Path
