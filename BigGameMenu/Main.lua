@@ -235,8 +235,7 @@ Private.OnInit = function(self)
 
 	-- Kill off the Blizzard content
 	local frame = GameMenuFrame
-	frame:SetSize(0,0)
-	frame:SetFrameStrata("LOW")
+	frame:SetSize(.0001,.0001)
 	frame:EnableMouse(false)
 	frame:EnableKeyboard(false)
 	frame:SetAlpha(0)
