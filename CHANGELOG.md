@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. Be aware th
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.28-Release] 2023-06-15
+### Fixed
+- The menu should once again appear above most other interface panels.
+
 ## [1.0.27-Release] 2023-05-31
 - Updated addon listing icon textures for Retail.
 
