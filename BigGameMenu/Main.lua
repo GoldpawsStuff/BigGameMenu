@@ -27,6 +27,7 @@
 local Addon, Private = ...
 
 -- Lua API
+local ipairs = ipairs
 local pairs = pairs
 local select = select
 local string_format = string.format
@@ -34,9 +35,6 @@ local string_lower = string.lower
 local string_gsub = string.gsub
 local string_upper = string.upper
 local table_insert = table.insert
-
--- WoW API
-local CreateFrame = CreateFrame
 
 -- Addon API
 -----------------------------------------------------------
@@ -157,6 +155,9 @@ Private.UpdateButtons = function(self)
 			if (orig:IsEnabled()) then
 				button.disabledTooltip = nil
 				button:Enable()
+				if (self.IsRetail) then
+					button:UpdateButton("NORMAL")
+				end
 			else
 				button.disabledTooltip = orig.disabledTooltip
 				button:Disable()

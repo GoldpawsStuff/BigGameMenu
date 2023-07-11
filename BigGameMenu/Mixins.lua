@@ -148,7 +148,11 @@ BigGameMenuButton.UpdateButton = function(self, buttonState)
 end
 
 BigGameMenuButton.OnMouseDown = function(self)
-	self:UpdateButton("PUSHED")
+	if (not Private.IsRetail or not GetCVarBool("ActionButtonUseKeyDown")) then
+		self:UpdateButton("PUSHED")
+	else
+		self:UpdateButton("NORMAL")
+	end
 end
 
 BigGameMenuButton.OnMouseUp = function(self)
