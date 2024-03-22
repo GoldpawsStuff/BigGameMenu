@@ -113,6 +113,22 @@ Private.GetButtonData = function(self)
 				}
 			end
 
+		elseif (self.IsCata) then
+			self.buttonData = {
+				{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
+				{ Ref = "GameMenuButtonStore", Text = BLIZZARD_STORE },
+				{ },
+				{ Ref = "GameMenuButtonOptions", Text = GAMEMENU_OPTIONS },
+				{ Ref = "GameMenuButtonMacros", Text = MACROS },
+				{ Ref = "GameMenuButtonAddons", Text = ADDONS },
+				{ },
+				{ Ref = "GameMenuButtonRatings", Text = RATINGS_MENU },
+				{ Ref = "GameMenuButtonLogout", Text = LOGOUT },
+				{ Ref = "GameMenuButtonQuit", Text = EXIT_GAME },
+				{ },
+				{ Ref = "GameMenuButtonContinue", Text = RETURN_TO_GAME }
+			}
+
 		elseif (self.IsRetail) then
 			self.buttonData = {
 				{ Ref = "GameMenuButtonHelp", Text = GAMEMENU_SUPPORT },
@@ -312,6 +328,17 @@ end
 	Private.IsTBC = (WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC)
 	Private.IsWrath = (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC)
 	Private.WoW10 = version >= 100000
+
+	-- Simple flags for client version checks
+	Private.IsRetail = (WOW_PROJECT_ID == WOW_PROJECT_MAINLINE)
+	Private.IsClassic = (WOW_PROJECT_ID == WOW_PROJECT_CLASSIC)
+	Private.IsTBC = (WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC)
+	Private.IsWrath = (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC)
+	Private.IsCata = (WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC)
+	--Private.IsCata = WOW_PROJECT_ID == (WOW_PROJECT_CATA_CLASSIC or 99) -- NYI in first build
+	Private.IsCata = (version >= 40400) and (version < 50000)
+	Private.WoW10 = version >= 100000
+
 
 	Private.ClientVersion = version
 	Private.ClientDate = date
