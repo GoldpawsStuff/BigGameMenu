@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file. Be aware th
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.42-Release] 2024-07-24
+- Discontinued for WoW Retail as the default game menu has been enlarged.
+
 ## [1.0.41-Release] 2024-07-10
 - Updated for WoW Retail Client Patch 10.2.7.
 - Updated for WoW Classic Era Client Patch 1.15.3.

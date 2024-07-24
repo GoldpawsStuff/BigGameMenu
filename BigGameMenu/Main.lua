@@ -242,6 +242,7 @@ end
 -- Initialization.
 -- This fires when the addon and its settings are loaded.
 Private.OnInit = function(self)
+	if (self.WoW11) then return end
 
 	self.buttons = {}
 	self.buttonsByName = {}
@@ -300,6 +301,8 @@ end
 -- This fires when most of the user interface has been loaded
 -- and most data is available to the user.
 Private.OnEnable = function(self)
+	if (self.WoW11) then return end
+
 	self:RegisterEvent("PLAYER_ENTERING_WORLD")
 end
 
@@ -331,6 +334,7 @@ end
 	--Private.IsCata = WOW_PROJECT_ID == (WOW_PROJECT_CATA_CLASSIC or 99) -- NYI in first build
 	Private.IsCata = (tocversion >= 40400) and (tocversion < 50000)
 	Private.WoW10 = tocversion >= 100000
+	Private.WoW11 = tocversion >= 110000
 
 	Private.ClientVersion = tocversion
 	Private.ClientDate = date
